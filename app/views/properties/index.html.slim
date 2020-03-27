@@ -1,0 +1,18 @@
+= button_to 'Fetch Properties', properties_path, method: :post
+
+table
+  thead
+    tr
+      th = 'Link'
+      th = 'Location'
+      th = 'Current Price in BGN'
+      th = 'Price change'
+      th = 'Added'
+  tbody
+    - @properties.each do |property|
+      tr
+        td = link_to property.description, property.imot_link, target: '_blank'
+        td = property.location
+        td = property.current_price
+        td = property.change_in_price
+        td = "Before #{(Date.current-property.created_at.to_date).to_i} days"
