@@ -6,8 +6,8 @@ module LoadProperties
 
   class << self
     def execute
-      Search.pluck(:url).each do |search_url|
-        PersistProperties.execute(FetchProperties.execute(search_url))
+      Search.all.each do |search|
+        PersistProperties.execute(FetchProperties.execute(search))
       end
     end
   end
