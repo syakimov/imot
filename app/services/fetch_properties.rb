@@ -2,13 +2,18 @@ require 'open-uri'
 
 module FetchProperties
   class Imot
-    attr_reader :link, :price, :description, :location
+    attr_reader :remote_id, :price, :description, :location
 
     def initialize(link:, price:, description:, location:)
-      @link = link
+      @remote_id = extract_remote_id link
       @price = price
       @description = description
       @location = location
+    end
+
+    def extract_remote_id(link)
+      # "//www.imot.bg/pcgi/imot.cgi?act=5&adv=1a120585141090062&slink=5crizy&f1=1"
+      link.split('adv=').last.split('&').first
     end
   end
 

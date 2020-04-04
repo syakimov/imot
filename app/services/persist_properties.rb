@@ -7,10 +7,10 @@ module PersistProperties
     end
 
     def save_property(imot)
-      property = Property.find_by remote_id: extract_remote_id(imot.link)
+      property = Property.find_by remote_id: imot.remote_id
 
       if property.nil?
-        property = Property.create!(remote_id: extract_remote_id(imot.link),
+        property = Property.create!(remote_id: imot.remote_id,
                                     current_price: imot.price,
                                     description: imot.description,
                                     change_in_price: 0,
@@ -23,11 +23,6 @@ module PersistProperties
       if last_recorded_change.nil? || last_recorded_change.updated_price != property.current_price
         PriceChange.create! property: property, updated_price: property.current_price
       end
-    end
-
-    def extract_remote_id(link)
-      # "//www.imot.bg/pcgi/imot.cgi?act=5&adv=1a120585141090062&slink=5crizy&f1=1"
-      link.split('adv=').last.split('&').first
     end
   end
 end
