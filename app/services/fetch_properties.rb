@@ -13,17 +13,20 @@ module FetchProperties
   end
 
   class << self
-    def execute(search)
+    def execute(search, properties = [])
       page = 1
 
-      properties = []
-
       while true
-        fetched_properties = fetch_properties_from_page(search.domain, "#{search.url}#{page}")
-        break if fetched_properties.size == 0
+        begin
+          fetched_properties = fetch_properties_from_page(search.domain, "#{search.url}#{page}")
+          break if fetched_properties.size == 0
 
-        properties += fetched_properties
-        page += 1
+          properties += fetched_properties
+          page += 1
+        rescue Extractors::ParseError => error
+          p error.message
+          page += 1
+        end
       end
 
       properties
@@ -31,16 +34,25 @@ module FetchProperties
 
     def fetch_properties_from_page(domain, url)
       p "Fetching url: #{url}"
-      document = Nokogiri::HTML(open(url))
+      properties = []
+
+      document =
+        begin
+          Nokogiri::HTML(open(url))
+        rescue OpenURI::HTTPError
+          nil
+        end
+
+      return [] unless document
 
       extractor =
         if domain == 'imotbg'
           Extractors::Imotbg.new document
+        elsif domain == 'alo'
+          Extractors::Alo.new document
         else
           raise 'Not expected domain'
         end
-
-      properties = []
 
       extractor.properties_count.times do |i|
         properties << PropertyValueObject.new(remote_id: extractor.remote_ids[i],

@@ -1,6 +1,10 @@
 class PropertiesController < ApplicationController
   def index
-    scope = Property.includes(:price_changes).order(:change_in_price, :current_price)
+    scope =
+      Property.
+        includes(:price_changes).
+        where('current_price > 100').
+        order(:change_in_price, :current_price)
 
     @properties = params[:changed] ? scope.where.not(change_in_price: 0) : scope.all
   end

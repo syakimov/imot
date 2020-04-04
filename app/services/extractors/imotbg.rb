@@ -27,6 +27,8 @@ module Extractors
 
     def parse_price(price)
       amount = price.gsub(' ', '').to_i
+      p price
+      p amount
       if price.include?('EUR') || price.include?('$') || price.include?('USD')
         amount * 2
       else
