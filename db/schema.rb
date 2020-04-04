@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_03_27_175906) do
+ActiveRecord::Schema.define(version: 2020_04_04_065143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -18,6 +18,8 @@ ActiveRecord::Schema.define(version: 2020_03_27_175906) do
   create_table "price_changes", force: :cascade do |t|
     t.bigint "property_id", null: false
     t.integer "updated_price", null: false
+    t.datetime "created_at"
+    t.datetime "updated_at"
     t.index ["property_id"], name: "index_price_changes_on_property_id"
   end
 
@@ -31,6 +33,13 @@ ActiveRecord::Schema.define(version: 2020_03_27_175906) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["remote_id"], name: "index_properties_on_remote_id", unique: true
+  end
+
+  create_table "searches", force: :cascade do |t|
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "domain"
   end
 
   add_foreign_key "price_changes", "properties", on_delete: :cascade

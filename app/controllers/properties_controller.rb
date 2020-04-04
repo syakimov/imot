@@ -1,10 +1,12 @@
 class PropertiesController < ApplicationController
   def index
-    @properties = Property.includes(:price_changes).order(:current_price).all
+    scope = Property.includes(:price_changes).order(:change_in_price, :current_price)
+
+    @properties = params[:changed] ? scope.where.not(change_in_price: 0) : scope.all
   end
 
   def create
-    PersistProperties.execute(FetchProperties.execute)
+    LoadProperties.execute
 
     @properties = Property.includes(:price_changes).order(:current_price).all
 

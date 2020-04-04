@@ -1,10 +1,6 @@
 require 'open-uri'
 
 module FetchProperties
-  SEARCHES = {
-    burgas: 'https://www.imot.bg/pcgi/imot.cgi?act=3&slink=5crizy&f1='
-  }
-
   class Imot
     attr_reader :link, :price, :description, :location
 
@@ -17,8 +13,7 @@ module FetchProperties
   end
 
   class << self
-    def execute
-      url = 'https://www.imot.bg/pcgi/imot.cgi?act=3&slink=5crizy&f1='
+    def execute(url)
       page = 1
 
       properties = []
@@ -56,7 +51,7 @@ module FetchProperties
     def parse_prices(prices_as_text)
       prices_as_text.map do |price|
         amount = price.gsub(' ', '').to_i
-        if price.include? 'EUR'
+        if price.include?('EUR') || price.include?('$') || price.include?('USD')
           amount * 2
         else
           amount

@@ -16,7 +16,7 @@ module PersistProperties
                                     change_in_price: 0,
                                     location: imot.location)
       elsif property.current_price != imot.price
-        property.update(change_in_price: property.current_price - imot.price, current_price: imot.price)
+        property.update(change_in_price: imot.price - property.current_price, current_price: imot.price)
       end
 
       last_recorded_change = property.price_changes.order(:id).last
