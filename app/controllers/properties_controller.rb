@@ -1,19 +1,40 @@
 class PropertiesController < ApplicationController
   def index
+    @properties = properties
+  end
+
+  def mark_as_seen
+    property = Property.find params[:id]
+    property.update(seen: !property.seen)
+  end
+
+  def mark_as_starred
+    property = Property.find params[:id]
+    property.update(starred: !property.starred)
+  end
+
+  private
+
+  def properties
     scope =
       Property.
         includes(:price_changes).
-        where('current_price > 100').
-        order(:change_in_price, :current_price)
+        order(starred: :desc,
+              change_in_price: :asc,
+              current_price: :asc, )
 
-    @properties = params[:changed] ? scope.where.not(change_in_price: 0) : scope.all
-  end
+    scope = scope.where("current_price >= #{params[:from] || 10}")
+    scope = scope.where("current_price <= #{params[:to] || 100000}")
+    scope = scope.where(seen: false) unless params[:include_seen]
 
-  def create
-    LoadProperties.execute
+    scope = scope.where("description LIKE '%#{params[:q]}%'") if params[:q]
 
-    @properties = Property.includes(:price_changes).order(:current_price).all
+    scope = scope.where.not(change_in_price: 0) if params[:changed_only]
+    filtered_properties = scope.all
 
-    render :index
+    filtered_properties = filtered_properties.select { |prop| !prop.formatted_description.include? 'ПАРЦЕЛ' } if params[:without_land]
+    filtered_properties = filtered_properties.select { |prop| !prop.formatted_description.include? 'СТАЕН' } if params[:without_appartments]
+
+    filtered_properties
   end
 end

@@ -11,7 +11,8 @@ module Extractors
       @remote_ids = raw_links.map {|raw_link| extract_remote_id(raw_link.attributes['href'].value) }
       @locations = raw_locations.map { |l| l.children.children.last.text }
       @prices = raw_prices.map { |raw_price| parse_price(raw_price) }
-      @descriptions = document.css('.listvip-desc').map { |raw_description| raw_description.children.last.text }
+      # @descriptions = document.css('.listvip-desc').map { |raw_description| raw_description.children.last.text }
+      @descriptions = document.css('.listvip-item-title').map(&:text)
       @properties_count = remote_ids.size
 
       if [remote_ids.size, descriptions.size, prices.size, locations.size].uniq.size > 1
