@@ -19,7 +19,7 @@
 }
 
 .odd {
-    background: #ffffff;
+    background: #90EE90;
 }
 
 table {
@@ -29,4 +29,13 @@ table {
 
 td.center {
   text-align: center;
+}
+
+tr {
+  transition: all 1s;
+}
+
+tr:hover {
+  opacity: 1;
+  background: #FFFCBB;
 }
