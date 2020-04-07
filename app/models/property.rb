@@ -2,7 +2,9 @@ class Property < ApplicationRecord
   has_many :price_changes
 
   def link
-    if from_imotbg?
+    if remote_id.include? 'bulgarianproperties'
+      remote_id
+    elsif from_imotbg?
       "https://www.imot.bg/pcgi/imot.cgi?act=5&adv=#{remote_id}"
     else
       "https://www.alo.bg/#{remote_id}"

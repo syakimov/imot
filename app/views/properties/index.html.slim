@@ -14,7 +14,7 @@ table
   tbody
     - @properties.each do |property|
       tr class=cycle('even', 'odd')
-        td class='center' = link_to "[#{property.seen ? 'X' : '  '}]", mark_as_seen_property_path(property), method: :post
+        td class='center' = link_to "#{property.seen ? 'x' : 'X'}", mark_as_seen_property_path(property), method: :post
         td class='center' = link_to "[#{property.starred ? '★' : '  '}]", mark_as_starred_property_path(property), method: :post
         td = link_to property.formatted_description, property.link, target: '_blank'
         td = property.location&.first(50)

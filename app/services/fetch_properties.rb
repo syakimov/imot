@@ -14,7 +14,7 @@ module FetchProperties
 
   class << self
     def execute(search, properties = [])
-      page = 1
+      page = search.domain == 'BulgarianProperties' ? 0 : 1
 
       while true
         begin
@@ -50,6 +50,8 @@ module FetchProperties
           Extractors::Imotbg.new document
         elsif domain == 'alo'
           Extractors::Alo.new document
+        elsif domain == 'BulgarianProperties'
+          Extractors::BulgarianProperties.new document
         else
           raise 'Not expected domain'
         end

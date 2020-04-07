@@ -5,7 +5,7 @@ class PropertiesController < ApplicationController
 
   def mark_as_seen
     property = Property.find params[:id]
-    property.update(seen: !property.seen)
+    property.update(seen: true)
   end
 
   def mark_as_starred
