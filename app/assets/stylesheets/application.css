@@ -14,12 +14,22 @@
  *= require_self
  */
 
+body {
+  background-color: #fbfbf8;
+  margin: 0;
+  border: 0;
+}
+
 .even {
     background: #add8e6;
 }
 
 .odd {
     background: #90EE90;
+}
+
+.visited {
+  text-decoration: line-through;
 }
 
 table {
@@ -39,3 +49,10 @@ tr:hover {
   opacity: 1;
   background: #FFFCBB;
 }
+
+a {
+  color:#666666;
+  text-decoration: none;
+}
+
+a:hover { text-decoration : none; }

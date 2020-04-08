@@ -13,4 +13,16 @@
 //= require rails-ujs
 //= require activestorage
 //= require turbolinks
+//= require jquery
 //= require_tree .
+
+$(() => {
+  $('td.js_index a').click((event) => {
+    // a -> td -> tr
+    event.target.parentElement.parentElement.remove()
+  })
+
+  $('td.js_link a').click((event) => {
+    event.target.parentElement.parentElement.className = 'visited'
+  })
+});

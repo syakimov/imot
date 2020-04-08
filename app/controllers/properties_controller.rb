@@ -35,6 +35,8 @@ class PropertiesController < ApplicationController
     filtered_properties = filtered_properties.select { |prop| !prop.formatted_description.include? 'ПАРЦЕЛ' } if params[:without_land]
     filtered_properties = filtered_properties.select { |prop| !prop.formatted_description.include? 'СТАЕН' } if params[:without_appartments]
 
+    filtered_properties = filtered_properties.first(100) unless params[:show_all]
+
     filtered_properties
   end
 end
