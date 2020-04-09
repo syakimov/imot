@@ -17,12 +17,15 @@
 //= require_tree .
 
 $(() => {
-  $('td.js_index a').click((event) => {
+  const removeRow = (event) => {
     // a -> td -> tr
     event.target.parentElement.parentElement.remove()
-  })
+  }
 
-  $('td.js_link a').click((event) => {
+  const markAsVisited = (event) => {
     event.target.parentElement.parentElement.className = 'visited'
-  })
+  }
+
+  $('td.js_index a').click(removeRow);
+  $('td.js_link a').click(markAsVisited);
 });

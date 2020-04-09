@@ -18,7 +18,6 @@ class PropertiesController < ApplicationController
   def properties
     scope =
       Property.
-        includes(:price_changes).
         order(starred: :desc,
               change_in_price: :asc,
               current_price: :asc, )
@@ -27,7 +26,8 @@ class PropertiesController < ApplicationController
     scope = scope.where("current_price <= #{params[:to] || 100000}")
     scope = scope.where(seen: false) unless params[:include_seen]
 
-    scope = scope.where("description LIKE '%#{params[:q]}%'") if params[:q]
+    scope = scope.where("description LIKE '%#{params[:d]}%'") if params[:d]
+    scope = scope.where("location LIKE '%#{params[:l]}%'") if params[:l]
 
     scope = scope.where.not(change_in_price: 0) if params[:changed_only]
     filtered_properties = scope.all
