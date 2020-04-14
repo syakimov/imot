@@ -28,6 +28,9 @@ class PropertiesController < ApplicationController
 
     scope = scope.where("description LIKE '%#{params[:d]}%'") if params[:d]
     scope = scope.where("location LIKE '%#{params[:l]}%'") if params[:l]
+    if params[:self_sustained]
+      scope = scope.where("detailed_description LIKE '%кладенец%' OR detailed_description LIKE '%сонда%' OR detailed_description LIKE '%собствен водоисточник%'")
+    end
 
     scope = scope.where.not(change_in_price: 0) if params[:changed_only]
     filtered_properties = scope.all

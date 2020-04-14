@@ -13,8 +13,9 @@ module FetchProperties
   end
 
   class << self
-    def execute(search, properties = [])
-      page = search.domain == 'BulgarianProperties' ? 0 : 1
+    def execute(search, page = 1, properties = [])
+      page = 0 if search.domain == 'BulgarianProperties'
+
 
       while true
         begin
@@ -39,7 +40,7 @@ module FetchProperties
       document =
         begin
           Nokogiri::HTML(open(url))
-        rescue OpenURI::HTTPError
+        rescue
           nil
         end
 
