@@ -26,6 +26,15 @@ $(() => {
     event.target.parentElement.parentElement.className = 'visited'
   }
 
+  const markAsStarred = (event) => {
+    if (event.target.innerHTML === '[★]') {
+      event.target.innerHTML = '[ ]'
+    } else {
+      event.target.innerHTML = '[★]'
+    }
+  }
+
   $('td.js_index a').click(removeRow);
   $('td.js_link a').click(markAsVisited);
+  $('td.js_star a').click(markAsStarred);
 });

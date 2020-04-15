@@ -18,7 +18,7 @@
       - @properties.each do |property|
         tr class=cycle('even', 'odd')
           td class="center js_index #{property.seen ? 'red' : ''}" = link_to 'X', mark_as_seen_property_path(property), method: :post
-          td class='center' = link_to "[#{property.starred ? '★' : '  '}]", mark_as_starred_property_path(property), method: :post
+          td class='center js_star' = link_to "[#{property.starred ? '★' : '  '}]", mark_as_starred_property_path(property), method: :post
           td class='js_link' = link_to property.formatted_description, property.link, target: '_blank'
           td = property.location&.first(50)
           td = property.current_price
