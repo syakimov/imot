@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_12_180426) do
+ActiveRecord::Schema.define(version: 2020_04_25_022352) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -36,6 +36,8 @@ ActiveRecord::Schema.define(version: 2020_04_12_180426) do
     t.boolean "starred", default: false, null: false
     t.integer "initial_price"
     t.string "detailed_description"
+    t.integer "building_plot"
+    t.integer "yard"
     t.index ["remote_id"], name: "index_properties_on_remote_id", unique: true
   end
 

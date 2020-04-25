@@ -28,7 +28,9 @@ module PersistProperties
       alo_properties.each do |property|
         begin
           pp property ;nil
-          update_property FetchSingleProperty.execute(property), property
+          document = FetchSingleProperty.execute property.link
+          data = Extractors::SinglePropertyExtractor.new property.domain, document
+          update_property data, property
           pp property ;nil
         rescue
         end
@@ -43,6 +45,8 @@ module PersistProperties
       end
       update_hash[:description] = fetched_property_data.description if fetched_property_data.description
       update_hash[:detailed_description] = fetched_property_data.detailed_description if fetched_property_data.detailed_description
+      update_hash[:building_plot] = fetched_property_data.building_plot if fetched_property_data.building_plot
+      update_hash[:yard] = fetched_property_data.yard if fetched_property_data.yard
 
       property.update update_hash
     end
