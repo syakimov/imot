@@ -17,14 +17,14 @@ module FetchProperties
       page = 0 if search.domain == 'BulgarianProperties'
 
 
-      while true
+      while true && page < 20
         begin
           fetched_properties = fetch_properties_from_page(search.domain, "#{search.url}#{page}")
           break if fetched_properties.size == 0
 
           properties += fetched_properties
           page += 1
-        rescue Extractors::ParseError => error
+        rescue => error
           p error.message
           page += 1
         end
@@ -53,6 +53,8 @@ module FetchProperties
           Extractors::Alo.new document
         elsif domain == 'BulgarianProperties'
           Extractors::BulgarianProperties.new document
+        elsif domain == 'olx'
+          Extractors::Olx.new document
         else
           raise 'Not expected domain'
         end

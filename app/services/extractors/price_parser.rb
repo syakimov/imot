@@ -5,7 +5,7 @@ module Extractors
     def execute(price)
       amount = price.split('.').first.tr('^0-9', '').to_i
 
-      if price.include?('EUR') || price.include?('$') || price.include?('USD')
+      if price.include?('€') || price.include?('EUR') || price.include?('$') || price.include?('USD')
         amount * 2
       else
         amount
