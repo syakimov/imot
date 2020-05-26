@@ -1,15 +1,15 @@
 class Property < ApplicationRecord
-  ALO = 'Alo'
-  IMOTBG = 'Imotbg'
+  ALO = 'alo'
+  IMOTBG = 'imotbg'
   BULGARIAN_PROPERTIES = 'BulgarianProperties'
 
   has_many :price_changes
 
   def link
     case domain
-    when BULGARIAN_PROPERTIES then remote_id
     when IMOTBG then "https://www.imot.bg/pcgi/imot.cgi?act=5&adv=#{remote_id}"
     when ALO then "https://www.alo.bg/#{remote_id}"
+    else remote_id
     end
   end
 
